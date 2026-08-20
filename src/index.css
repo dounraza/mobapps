@@ -1,0 +1,24 @@
+:root {
+  --primary-color: #4a90e2;
+  --bg-color: #f8f9fa;
+  --text-color: #333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.navbar {
+  background: linear-gradient(90deg, #2c3e50, #4a90e2);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+}
