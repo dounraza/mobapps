@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { Card, Form, Button, Container, Alert, Table, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Card, Form, Button, Container, Table, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { useNotification } from './NotificationContext';
 
 function SettingsPage() {
   const [tiers, setTiers] = useState([]);
   const [newTier, setNewTier] = useState({ operateur: 'Orange', action_type: 'Depot', min: '', max: '', type: 'fixed', value: '' });
   const [bulkData, setBulkData] = useState('');
-  const [message, setMessage] = useState(null);
+  const notify = useNotification();
 
   useEffect(() => {
     fetchTiers();
@@ -32,9 +33,9 @@ function SettingsPage() {
   const handleSingleSubmit = async () => {
     if (!newTier.min || !newTier.max || !newTier.value) return;
     const error = await handleAddTier(newTier);
-    if (error) setMessage({ type: 'danger', text: error.message });
+    if (error) notify(error.message, 'error');
     else {
-      setMessage({ type: 'success', text: 'Palier ajouté !' });
+      notify('Palier ajouté !');
       fetchTiers();
       setNewTier({ ...newTier, min: '', max: '', value: '' });
     }
@@ -48,9 +49,9 @@ function SettingsPage() {
     });
 
     const { error } = await supabase.from('commission_tiers').insert(tiersToInsert);
-    if (error) setMessage({ type: 'danger', text: error.message });
+    if (error) notify(error.message, 'error');
     else {
-      setMessage({ type: 'success', text: `${tiersToInsert.length} paliers ajoutés !` });
+      notify(`${tiersToInsert.length} paliers ajoutés !`);
       setBulkData('');
       fetchTiers();
     }
@@ -58,14 +59,22 @@ function SettingsPage() {
 
   const handleDeleteTier = async (id) => {
     await supabase.from('commission_tiers').delete().eq('id', id);
+    notify('Palier supprimé');
     fetchTiers();
   };
 
   return (
     <Container className="py-4">
+      <Card className="p-4 shadow-sm border-0 rounded-3 mb-4">
+        <h4 className="text-primary fw-bold">Application Mobile</h4>
+        <p>Téléchargez notre application Android pour une expérience mobile fluide.</p>
+        <Button variant="primary" href="/app-release.apk" download>
+          Télécharger l'APK
+        </Button>
+      </Card>
+      
       <Card className="p-4 shadow-sm border-0 rounded-3">
         <h3 className="mb-4 text-primary fw-bold">Gestion des Paliers</h3>
-        {message && <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>{message.text}</Alert>}
         
         <Tabs defaultActiveKey="Orange" className="mb-3" id="operator-tabs">
           {['Orange', 'Airtel', 'MVola'].map(op => (
