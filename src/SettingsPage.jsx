@@ -68,7 +68,7 @@ function SettingsPage() {
       <Card className="p-4 shadow-sm border-0 rounded-3 mb-4">
         <h4 className="text-primary fw-bold">Application Mobile</h4>
         <p>Téléchargez notre application Android pour une expérience mobile fluide.</p>
-        <Button variant="primary" href="/apk/mobapps.apk" download>
+        <Button variant="primary" href="/mobapps.apk" download>
           Télécharger l'APK
         </Button>
       </Card>
