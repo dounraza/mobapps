@@ -26,6 +26,7 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard/workspace" className="px-3">Espace de Travail</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/transactions" className="px-3">Transactions</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/parametres" className="px-3 text-warning">Paramètres</Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/securite" className="px-3 text-warning">Sécurité</Nav.Link>
               <Button variant="outline-danger" className="ms-3" onClick={handleLogout}>Déconnexion</Button>
             </Nav>
           </Navbar.Collapse>
